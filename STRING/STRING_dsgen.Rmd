@@ -117,6 +117,10 @@ STRING_phylo_predictions[, sort(table(database), decreasing = T)]
 
 
 ```{r , results= 'hide',message=FALSE, warning=FALSE}
+# saving STRING_all table with standard columns
+STRING_proc = STRING_proc[,.(pair_id_clean, ida_clean = ida_up, idb_clean = idb_up, taxon = "9606", STRING_score = score, database, STRING_textmining = 1)]
+fwrite(x = unique(STRING_proc), 
+       file = "./results/pairs_STRING_all.txt", sep = "\t")
 
 # saving STRING_textmining table with standard columns
 STRING_textmining = STRING_textmining[,.(pair_id_clean, ida_clean = ida_up, idb_clean = idb_up, taxon = "9606", STRING_score = score, database, STRING_textmining = 1)]

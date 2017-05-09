@@ -5,7 +5,7 @@ STRING dataset generator
 
 
 
-I download the latest version of the STRING data for human from STRING website: MITAB2.5. Current file was downloaded on Mon Apr  3 15:16:22 2017. 
+I download the latest version of the STRING data for human from STRING website: MITAB2.5. Current file was downloaded on Tue May  9 12:20:03 2017. 
 
 
 ```r
@@ -41,7 +41,7 @@ STRING_mitab = fread(STRING_mitab_25_file, colClasses = "character", header = F)
 
 ```
 ## 
-Read 59.8% of 752997 rows
+Read 57.1% of 752997 rows
 Read 752997 rows and 15 (of 15) columns from 0.367 GB file in 00:00:03
 ```
 
@@ -91,15 +91,15 @@ STRING_proc[, sort(table(method), decreasing = T)]
 ```
 ## method
 ##                 psi-mi:"MI:0064"(interologs mapping) 
-##                                               242926 
+##                                               242739 
 ##                          psi-mi:"MI:0362"(inference) 
-##                                               191170 
+##                                               191166 
 ##             psi-mi:"MI:0087"(predictive text mining) 
-##                                               168113 
+##                                               168095 
 ## psi-mi:"MI:0045"(experimental interaction detection) 
-##                                                89715 
+##                                                89645 
 ##               psi-mi:"MI:0085"(phylogenetic profile) 
-##                                                 2874 
+##                                                 2861 
 ##                      psi-mi:"MI:0036"(domain fusion) 
 ##                                                  114
 ```
@@ -116,7 +116,7 @@ STRING_textmining[, sort(table(database), decreasing = T)]
 
 ```
 ## psi-mi:"MI:1014"(string) 
-##                   168113
+##                   168095
 ```
 
 ```r
@@ -135,7 +135,7 @@ STRING_pathway_inference[, sort(table(database), decreasing = T)][1:20]
 ##                                                                            psi-mi:"MI:0448"(gene_ontology) 
 ##                                                                                                       7041 
 ##                                                                                      psi-mi:"MI:1107"(pid) 
-##                                                                                                       4335 
+##                                                                                                       4334 
 ##                                                      psi-mi:"MI:1107"(pid)|psi-mi:"MI:0470"(kegg_pathways) 
 ##                                                                                                       3002 
 ##                                                                                 psi-mi:"MI:1108"(biocarta) 
@@ -175,7 +175,7 @@ STRING_phylo_predictions[, sort(table(database), decreasing = T)]
 
 ```
 ## psi-mi:"MI:1014"(string) 
-##                   245914
+##                   245714
 ```
 
 ```r
@@ -191,6 +191,11 @@ STRING_phylo_predictions[, sort(table(database), decreasing = T)]
 
 
 ```r
+# saving STRING_all table with standard columns
+STRING_proc = STRING_proc[,.(pair_id_clean, ida_clean = ida_up, idb_clean = idb_up, taxon = "9606", STRING_score = score, database, STRING_textmining = 1)]
+fwrite(x = unique(STRING_proc), 
+       file = "./results/pairs_STRING_all.txt", sep = "\t")
+
 # saving STRING_textmining table with standard columns
 STRING_textmining = STRING_textmining[,.(pair_id_clean, ida_clean = ida_up, idb_clean = idb_up, taxon = "9606", STRING_score = score, database, STRING_textmining = 1)]
 fwrite(x = unique(STRING_textmining), 
@@ -205,11 +210,11 @@ fwrite(x = unique(STRING_phylo_predictions),
        file = "./results/pairs_STRING_phylo_predictions.txt", sep = "\t")
 ```
 
-The total number of interacting pairs in the filtered by database STRING_textmining dataset: 167611
+The total number of interacting pairs in the filtered by database STRING_textmining dataset: 167593
 
-The total number of interacting pairs in the filtered by database STRING_pathway_inference dataset: 191043 
+The total number of interacting pairs in the filtered by database STRING_pathway_inference dataset: 191039 
 
-The total number of interacting pairs in the filtered by database STRING_phylo_predictions dataset: 242030 
+The total number of interacting pairs in the filtered by database STRING_phylo_predictions dataset: 241842 
 
 #### Compare STRING "textmining", "pathway inference", "phylogeny and homology-based predictions" datasets
 
